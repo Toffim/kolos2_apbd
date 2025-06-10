@@ -5,11 +5,11 @@ namespace ExampleTest2.Data;
 
 public class DatabaseContext : DbContext
 {
-    public DbSet<Client> Clients { get; set; }
-    public DbSet<Status> Statuses { get; set; }
-    public DbSet<Product> Products { get; set; }
-    public DbSet<Order> Orders { get; set; }
-    public DbSet<ProductOrder> ProductOrders { get; set; }
+    public DbSet<Player> Players { get; set; }
+    public DbSet<Match> Matches { get; set; }
+    public DbSet<Map> Maps { get; set; }
+    public DbSet<Tournament> Tournaments { get; set; }
+    public DbSet<PlayerMatch> PlayerMatches { get; set; }
     
     protected DatabaseContext()
     {
@@ -21,44 +21,31 @@ public class DatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Client>().HasData(new List<Client>()
+        modelBuilder.Entity<Player>().HasData(new List<Player>()
         {
-            new Client() { Id = 1, FirstName = "John", LastName = "Doe" },
-            new Client() { Id = 2, FirstName = "Jane", LastName = "Doe" },
-            new Client() { Id = 3, FirstName = "Julie", LastName = "Doe" },
+            new Player() { PlayerId = 1, FirstName = "Juziek", LastName = "Kowalski", BirthDate = DateTime.Parse("1950-05-02") },
+            new Player() { PlayerId = 2, FirstName = "Joanna", LastName = "Bosna", BirthDate = DateTime.Parse("1950-05-02") },
+            new Player() { PlayerId = 3, FirstName = "Krzysiek", LastName = "Wiosna", BirthDate = DateTime.Parse("1950-05-02") },
+        });
+
+        modelBuilder.Entity<Match>().HasData(new List<Match>()
+        {
+            new Match() { MatchId = 1, TournamentId = 1, MapId = 1, MatchDate = DateTime.Parse("1950-05-02"), Team1Score = 20, Team2Score = 10, BestRating = 20.52},
         });
         
-        modelBuilder.Entity<Status>().HasData(new List<Status>()
+        modelBuilder.Entity<Map>().HasData(new List<Map>()
         {
-            new Status() { Id = 1, Name = "Created" },
-            new Status() { Id = 2, Name = "Ongoing" },
-            new Status() { Id = 3, Name = "Completed" },
+            new Map() { MapId = 1, Name = "Chinatown", Type = "Large" },
         });
         
-        modelBuilder.Entity<Product>().HasData(new List<Product>()
+        modelBuilder.Entity<Tournament>().HasData(new List<Tournament>()
         {
-            new Product() { Id = 1, Name = "Apple", Price = 3.45 },
-            new Product() { Id = 2, Name = "Bananas", Price = 5.55 },
-            new Product() { Id = 3, Name = "Orange", Price = 12.37 },
+            new Tournament() { TournamentId = 1, Name = "World Championship", StartDate = DateTime.Parse("1970-05-02"), EndDate = DateTime.Parse("1970-05-04")}
         });
         
-        modelBuilder.Entity<Order>().HasData(new List<Order>()
+        modelBuilder.Entity<PlayerMatch>().HasData(new List<PlayerMatch>()
         {
-            new Order() { Id = 1, CreatedAt = DateTime.Parse("2025-05-01"), FulfilledAt = DateTime.Parse("2025-05-02"), ClientId = 1, StatusId = 3},
-            new Order() { Id = 2, CreatedAt = DateTime.Parse("2025-05-02"), FulfilledAt = null, ClientId = 1, StatusId = 2},
-            new Order() { Id = 3, CreatedAt = DateTime.Parse("2025-05-03"), FulfilledAt = null, ClientId = 1, StatusId = 1},
-            new Order() { Id = 4, CreatedAt = DateTime.Parse("2025-05-04"), FulfilledAt = null, ClientId = 2, StatusId = 1},
-        });
-        
-        modelBuilder.Entity<ProductOrder>().HasData(new List<ProductOrder>()
-        {
-            new ProductOrder() { ProductId = 1, OrderId = 1, Amount = 3},
-            new ProductOrder() { ProductId = 2, OrderId = 1, Amount = 5},
-            new ProductOrder() { ProductId = 3, OrderId = 1, Amount = 8},
-            new ProductOrder() { ProductId = 3, OrderId = 2, Amount = 1},
-            new ProductOrder() { ProductId = 2, OrderId = 2, Amount = 2},
-            new ProductOrder() { ProductId = 3, OrderId = 3, Amount = 8},
-            new ProductOrder() { ProductId = 1, OrderId = 3, Amount = 12},
+            new PlayerMatch() { MatchId = 1, PlayerId = 1, MVPs = 1, Rating = 15.1 },
         });
     }
 }

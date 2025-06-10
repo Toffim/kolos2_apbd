@@ -3,13 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ExampleTest2.Models;
 
-[Table("Status")]
-public class Status
+[Table("Map")]
+public class Map
 {
     [Key]
-    public int Id { get; set; }
-    [MaxLength(50)]
+    public int MapId { get; set; }
+    [MaxLength(100)]
     public string Name { get; set; } = null!;
-    
-    public ICollection<Order> Orders { get; set; } = null!;
+    [MaxLength(100)]
+    public string Type { get; set; } = null!;
 }
