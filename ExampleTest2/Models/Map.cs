@@ -9,7 +9,9 @@ public class Map
     [Key]
     public int MapId { get; set; }
     [MaxLength(100)]
-    public string Name { get; set; } = null!;
+    public String Name { get; set; } = null!;
     [MaxLength(100)]
-    public string Type { get; set; } = null!;
+    public String Type { get; set; } = null!;
+    
+    public ICollection<Match> Matches { get; set; } = null!;
 }

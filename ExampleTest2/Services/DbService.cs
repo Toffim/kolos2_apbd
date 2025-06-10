@@ -14,4 +14,32 @@ public class DbService : IDbService
     {
         _context = context;
     }
+    
+    public async Task<PlayerMatchInfoDTO> GetPlayerMatchesInfo(int playerId)
+    {
+        var playerMatchInfo = await _context.Players
+            .Select(e => new PlayerMatchInfoDTO
+            {
+                PlayerId = e.PlayerId,
+                FirstName = e.FirstName,
+                LastName = e.LastName,
+                BirthDate = e.BirthDate,
+                Matches = e.PlayerMatches.Select(e => new MatchDTO()
+                {
+                    Tournament = e.Match.Tournament.Name,
+                    Map = e.Match.Map.Name,
+                    MVPs = e.MVPs,
+                    MatchDate = e.Match.MatchDate,
+                    Team1Score = e.Match.Team1Score,
+                    Team2Score = e.Match.Team2Score,
+                    Rating = e.Rating,
+                }).ToList()
+            })
+            .FirstOrDefaultAsync(e => e.PlayerId == playerId);
+
+        if (playerMatchInfo is null)
+            throw new NotFoundException();
+        
+        return playerMatchInfo;
+    }
 }

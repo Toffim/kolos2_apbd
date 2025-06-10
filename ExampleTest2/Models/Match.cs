@@ -22,4 +22,7 @@ public class Match
     public double? BestRating { get; set; }
     
     public ICollection<PlayerMatch> PlayerMatches { get; set; } = null!;
+    
+    public Map Map { get; set; } = null!;
+    public Tournament Tournament { get; set; } = null!;
 }

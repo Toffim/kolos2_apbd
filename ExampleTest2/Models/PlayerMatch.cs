@@ -17,6 +17,6 @@ public class PlayerMatch
     [Precision(4, 2)]
     public double Rating { get; set; }
 
-    public Match match { get; set; } = null!;
-    public Player player{ get; set; } = null!;
+    public Match Match { get; set; } = null!;
+    public Player Player{ get; set; } = null!;
 }
