@@ -2,6 +2,7 @@ using System.Data;
 using ExampleTest2.Data;
 using ExampleTest2.DTOs;
 using ExampleTest2.Exceptions;
+using ExampleTest2.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExampleTest2.Services;
@@ -41,5 +42,22 @@ public class DbService : IDbService
             throw new NotFoundException();
         
         return playerMatchInfo;
+    }
+
+    public async Task<bool> DoesMatchExist(int matchId)
+    {
+        return await _context.Matches.AnyAsync(e => e.MatchId == matchId);
+    }
+
+    public async Task AddNewPlayer(Player player)
+    {
+        await _context.AddAsync(player);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task AddNewPlayerMatches(IEnumerable<PlayerMatch> playerMatches)
+    {
+        await _context.AddRangeAsync(playerMatches);
+        await _context.SaveChangesAsync();
     }
 }
